@@ -1,8 +1,8 @@
 import React from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { assets } from "../../assets/assets";
+import { assets } from "../../assets/assets.js";
 import { LayoutGroupContext } from "motion/react";
-import Sidebar from "../../components/admin/Sidebar";
+import Sidebar from "../../components/admin/Sidebar.jsx";
 
 const Layout = () => {
   const navigate = useNavigate();
