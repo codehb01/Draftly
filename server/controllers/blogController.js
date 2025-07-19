@@ -2,6 +2,7 @@ import fs from "fs";
 import imagekit from "../configs/imageKit.js";
 import Blog from "../models/Blog.js";
 import Comment from "../models/Comment.js";
+import main from "../configs/gemini.js";
 
 export const addBlog = async (req, res) => {
   try {
@@ -94,7 +95,6 @@ export const deleteBlogById = async (req, res) => {
   }
 };
 
-
 export const togglePublish = async (req, res) => {
   try {
     const { id } = req.params;
@@ -149,3 +149,16 @@ export const updateBlogById = async (req, res) => {
   }
 };
 
+export const generateContent = async (req, res) => {
+  try {
+    // sending prompt
+    const { prompt } = req.body;
+    // giving instruction to model
+    const content = await main(
+      prompt + "Generate a blog content for this topic in simple text format"
+    );
+    res.json({ success: true, content });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};

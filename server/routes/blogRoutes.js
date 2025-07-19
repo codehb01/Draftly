@@ -3,6 +3,7 @@ import {
   addBlog,
   addComment,
   deleteBlogById,
+  generateContent,
   getAllBlogs,
   getBlogById,
   getBlogComments,
@@ -21,4 +22,7 @@ blogRouter.patch("/toggle-publish/:id", auth, togglePublish);
 // post a new comment and get comment list for ind blog
 blogRouter.post("/add-comment", addComment);
 blogRouter.get("/:blogId/comments", getBlogComments);
+
+// gemini route
+blogRouter.post("/generate", auth, generateContent);
 export default blogRouter;

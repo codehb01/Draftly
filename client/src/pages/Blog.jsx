@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 import Moment from "moment";
 import Loader from "../components/Loader";
 import Footer from "../components/Footer";
-import { useAppContext } from "../context/appContext";
+import { useAppContext } from "../context/AppContext.jsx";
 import toast from "react-hot-toast";
 const Blog = () => {
   const { id } = useParams();
@@ -81,7 +81,7 @@ const Blog = () => {
         </h1>
         <h2 className="my-5 max-w-lg truncate mx-auto">{data.subTitle}</h2>
         <p className="inline-block py-1 px-4 rounded-full mb-6 border text-sm border-primary/35 bg-primary/5 font-medium text-primary">
-          Micheal Brown
+          John Doe
         </p>
       </div>
       <div className="mx-5 max-w-5xl md:mx-auto my-10 mt-6  ">
