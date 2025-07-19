@@ -10,7 +10,7 @@ import Blog from "./pages/Blog.jsx";
 import Login from "./components/admin/Login.jsx";
 import "quill/dist/quill.snow.css";
 import { Toaster } from "react-hot-toast";
-import { useAppContext } from "./context/appContext.jsx";
+import { useAppContext } from "./context/AppContext.jsx";
 const App = () => {
   const { token } = useAppContext();
 
