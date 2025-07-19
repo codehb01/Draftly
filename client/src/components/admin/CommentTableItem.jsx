@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { assets } from "../../assets/assets";
-import { useAppContext } from "../../context/appContext";
+import { useAppContext } from "../../context/AppContext.jsx";
 import toast from "react-hot-toast";
 const CommentTableItem = ({ comment, fetchComments }) => {
   const { axios } = useAppContext();
@@ -16,7 +16,7 @@ const CommentTableItem = ({ comment, fetchComments }) => {
       if (data.success) {
         toast.success(data.message);
         fetchComments();
-      }else{
+      } else {
         toast.error(data.message);
       }
     } catch (error) {
@@ -62,8 +62,7 @@ const CommentTableItem = ({ comment, fetchComments }) => {
               className="w-5 hover:scale-110 transition-all cursor-pointer"
               alt="Approve"
             />
-          ) :
-           (
+          ) : (
             <p className="text-xs border border-green-600 bg-green-100 text-green-600 rounded-full px-3 py-1">
               Approved
             </p>

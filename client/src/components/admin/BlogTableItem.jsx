@@ -1,7 +1,7 @@
 import React from "react";
 import { assets } from "../../assets/assets";
 import toast from "react-hot-toast";
-import { useAppContext } from "../../context/appContext";
+import { useAppContext } from "../../context/AppContext.jsx";
 
 const BlogTableItem = ({ blog, fetchBlogs, index }) => {
   const { title, createdAt, isPublished, _id } = blog;
