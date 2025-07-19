@@ -14,16 +14,22 @@ await connectDB();
 // middlewares
 import cors from "cors";
 
-// Replace this with your actual frontend domain
-const allowedOrigins = ["https://draftly-wine.vercel.app/"];
+const allowedOrigins = ["https://draftly-wine.vercel.app"];
 
 app.use(
   cors({
-    origin: allowedOrigins,
-    credentials: true, // if you're using cookies
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("CORS not allowed for this origin"));
+      }
+    },
+    credentials: true,
   })
 );
-app.options("*", cors()); // Allow preflight requests
+
+app.options("*", cors()); // Preflight
 
 app.use(express.json());
 app.use(cookieParser());
