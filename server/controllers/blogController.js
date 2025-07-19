@@ -94,24 +94,6 @@ export const deleteBlogById = async (req, res) => {
   }
 };
 
-export const updateBlogById = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const updatedData = req.body;
-
-    const blog = await Blog.findByIdAndUpdate(id, updatedData, {
-      new: true,
-    });
-
-    if (!blog) {
-      return res.json({ success: false, message: "Blog not found" });
-    }
-
-    res.json({ success: true, message: "Blog updated", blog });
-  } catch (error) {
-    res.json({ success: false, message: error.message });
-  }
-};
 
 export const togglePublish = async (req, res) => {
   try {
@@ -147,3 +129,23 @@ export const getBlogComments = async (req, res) => {
     res.json({ success: false, message: error.message });
   }
 };
+
+export const updateBlogById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedData = req.body;
+
+    const blog = await Blog.findByIdAndUpdate(id, updatedData, {
+      new: true,
+    });
+
+    if (!blog) {
+      return res.json({ success: false, message: "Blog not found" });
+    }
+
+    res.json({ success: true, message: "Blog updated", blog });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+

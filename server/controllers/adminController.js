@@ -19,7 +19,7 @@ export const adminLogin = async (req, res) => {
 };
 
 // admin gets to see all blog data
-export const getAllBlogsAdmin = async () => {
+export const getAllBlogsAdmin = async (req, res) => {
   try {
     const blogs = await Blog.find({}).sort({ createdAt: -1 });
     res.json({ success: true, blogs });

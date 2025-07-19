@@ -1,7 +1,11 @@
-import React, { use, useState, useEffect } from "react";
-import { assets, dashboard_data } from "../../assets/assets";
+import React, { useState, useEffect } from "react";
+import { assets } from "../../assets/assets";
 import BlogTableItem from "../../components/admin/BlogTableItem";
+import { useAppContext } from "../../context/appContext";
+import toast from "react-hot-toast";
 const Dashboard = () => {
+  const { axios } = useAppContext();
+
   const [dashboardData, setDashboardData] = useState({
     blogs: 0,
     comments: 0,
@@ -11,7 +15,16 @@ const Dashboard = () => {
 
   // creating a function such that it will fetch the data from the backend
   const fetchDashboard = async () => {
-    setDashboardData(dashboard_data);
+    try {
+      const { data } = await axios.get("/api/admin/dashboard");
+      if (data.success) {
+        setDashboardData(data.dashboardData);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   useEffect(() => {
@@ -23,21 +36,21 @@ const Dashboard = () => {
         <div className="flex items-center gap-4 bg-white p-4 min-w-58 rounded shadow cursor-pointer hover:scale-105 transition-all">
           <img src={assets.dashboard_icon_1} />
           <p className="text-xl font-semibold text-gray-600">
-            {dashboard_data.blogs}
+            {dashboardData.blogs}
           </p>
           <p className="font-light text-gray-400">Blogs</p>
         </div>
         <div className="flex items-center gap-4 bg-white p-4 min-w-58 rounded shadow cursor-pointer hover:scale-105 transition-all">
           <img src={assets.dashboard_icon_2} />
           <p className="text-xl font-semibold text-gray-600">
-            {dashboard_data.comments}
+            {dashboardData.comments}
           </p>
           <p className="font-light text-gray-400">Comments</p>
         </div>
         <div className="flex items-center gap-4 bg-white p-4 min-w-58 rounded shadow cursor-pointer hover:scale-105 transition-all">
           <img src={assets.dashboard_icon_3} />
           <p className="text-xl font-semibold text-gray-600">
-            {dashboard_data.comments}
+            {dashboardData.drafts}
           </p>
           <p className="font-light text-gray-400">Drafts</p>
         </div>
