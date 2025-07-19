@@ -1,6 +1,6 @@
 import express from "express";
 import "dotenv/config";
-import cors from "cors";
+
 import cookieParser from "cookie-parser";
 import connectDB from "./configs/db.js";
 import adminRouter from "./routes/adminRoutes.js";
@@ -12,12 +12,18 @@ const app = express();
 await connectDB();
 
 // middlewares
+import cors from "cors";
+
+// Replace this with your actual frontend domain
+const allowedOrigins = ["https://draftly-wine.vercel.app/"];
+
 app.use(
   cors({
-    origin: "https://draftly-wine.vercel.app",
-    credentials: true,
+    origin: allowedOrigins,
+    credentials: true, // if you're using cookies
   })
 );
+app.options("*", cors()); // Allow preflight requests
 
 app.use(express.json());
 app.use(cookieParser());
