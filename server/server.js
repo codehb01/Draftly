@@ -1,6 +1,5 @@
 import express from "express";
 import "dotenv/config";
-
 import cookieParser from "cookie-parser";
 import connectDB from "./configs/db.js";
 import adminRouter from "./routes/adminRoutes.js";
@@ -16,9 +15,9 @@ import cors from "cors";
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://draftly-aawaxzd9t-harshal-bhosales-projects.vercel.app", // current frontend deployment
+  "https://draftly-aawaxzd9t-harshal-bhosales-projects.vercel.app",
+  "https://draftly-wine.vercel.app", // Add the correct frontend origin
 ];
-
 
 app.use(
   cors({
@@ -30,6 +29,8 @@ app.use(
       }
     },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Explicitly allow methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allow necessary headers
   })
 );
 
@@ -46,7 +47,7 @@ app.use("/api/blog", blogRouter);
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log("Server is runnning on PORT: " + PORT);
+  console.log("Server is running on PORT: " + PORT);
 });
 
 export default app;
