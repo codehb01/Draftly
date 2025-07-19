@@ -48,7 +48,7 @@ const Login = () => {
               value={email}
               type="email"
               name="email"
-              id=""
+              id="email"
               placeholder="your email id"
               className="border-b-2 border-gray-300 p-2  outline-none mb-6"
             />
@@ -60,7 +60,7 @@ const Login = () => {
               value={password}
               type="password"
               name="password"
-              id=""
+              id="password"
               placeholder="your password"
               className="border-b-2 border-gray-300 p-2  outline-none mb-6"
             />
