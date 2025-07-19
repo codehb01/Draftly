@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import BlogTableItem from "../../components/admin/BlogTableItem";
-import { useAppContext } from "../../context/appContext";
+import { useAppContext } from "../../context/AppContext.jsx";
 import toast from "react-hot-toast";
 
 const ListBlog = () => {

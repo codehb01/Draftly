@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { assets, comments_data } from "../../assets/assets.js";
+// import { assets, comments_data } from "../../assets/assets.js";
 import CommentTableItem from "../../components/admin/CommentTableItem.jsx";
-import { useAppContext } from "../../context/appContext";
+import { useAppContext } from "../../context/AppContext.jsx";
 import toast from "react-hot-toast";
 const Comments = () => {
   const { axios } = useAppContext();

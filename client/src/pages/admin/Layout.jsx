@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { assets } from "../../assets/assets.js";
 import { LayoutGroupContext } from "motion/react";
 import Sidebar from "../../components/admin/Sidebar.jsx";
-import { useAppContext } from "../../context/appContext.jsx";
+import { useAppContext } from "../../context/AppContext.jsx";
 
 const Layout = () => {
   const { axios, setToken, navigate } = useAppContext();
