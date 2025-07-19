@@ -1,6 +1,20 @@
-import React from "react";
+import React, { useRef } from "react";
 import { assets } from "../assets/assets";
+import { useAppContext } from "../context/appContext";
 const Header = () => {
+  // adding seraching ability
+  const { setInput, input } = useAppContext();
+  const inputRef = useRef();
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    setInput(inputRef.current.value);
+  };
+
+  const clearSearch = async () => {
+    setInput("");
+    inputRef.current.value = "";
+  };
+
   return (
     <div className="mx-8 sm:mx-16 xl:mx-24 relative">
       <div className="text-center mt-20 mb-8 ">
@@ -17,8 +31,14 @@ const Header = () => {
           write without filters. Whether it's one word or a thousand, your story
           starts right here.
         </p>
-        <form className="flex justify-between max-w-lg max-sm:scale-75 mx-auto border border-gray-300 bg-white rounded overflow-hidden">
+        <form
+          // adding function
+          onSubmit={onSubmitHandler}
+          className="flex justify-between max-w-lg max-sm:scale-75 mx-auto border border-gray-300 bg-white rounded overflow-hidden"
+        >
           <input
+            // adding refernce
+            ref={inputRef}
             type="text"
             placeholder="Search for blogs"
             required
@@ -31,6 +51,16 @@ const Header = () => {
             Search
           </button>
         </form>
+      </div>
+      <div className="text-center">
+        {input && (
+          <button
+            onClick={clearSearch}
+            className="border font-light text-xs py-1 px-3 rounded-sm shadow-custom-sm cursor-pointer"
+          >
+            Clear Search
+          </button>
+        )}
       </div>
 
       <img

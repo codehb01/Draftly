@@ -25,6 +25,12 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
     fetchBlogs();
+    const token = localStorage.getItem("token");
+    if (token) {
+      setToken(token);
+      // token would be added whenever admin in logged in and makes request
+      axios.defaults.headers.common["Authorization"] = `${token}`;
+    }
   }, []);
 
   const value = {

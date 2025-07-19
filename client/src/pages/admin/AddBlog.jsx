@@ -2,9 +2,15 @@ import React, { useState, useRef, useEffect } from "react";
 import { assets, blogCategories } from "../../assets/assets.js";
 import Quill from "quill";
 import Theme from "quill/core/theme.js";
+import { useAppContext } from "../../context/AppContext.jsx";
+import toast from "react-hot-toast";
 const AddBlog = () => {
   const editorRef = useRef(null);
   const quillRef = useRef(null);
+
+  // user input logic
+  const { axios } = useAppContext();
+  const [isAdding, setIsAdding] = useState(false);
 
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState("");
@@ -20,8 +26,35 @@ const AddBlog = () => {
   }, []);
 
   const onSubmitHandler = async (e) => {
-    e.preventDefault();
-    // Submission logic goes here
+    try {
+      e.preventDefault();
+      setIsAdding(true);
+      const blog = {
+        title,
+        subtitle,
+        description: quillRef.current.root.innerHTML,
+        category,
+        isPublished,
+      };
+
+      const formData = new FormData();
+      formData.append("blog", JSON.stringify(blog));
+      formData.append("image", image);
+
+      const { data } = await axios.post("/api/blog/add", formData);
+      if (data.success) {
+        toast.success(data.message);
+        setImage(false);
+        setTitle("");
+        quillRef.current.root.innerHTML = "";
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setIsAdding(false);
+    }
   };
 
   const generateContent = async () => {};
@@ -60,7 +93,7 @@ const AddBlog = () => {
         <input
           type="text"
           required
-          onChange={(e) => setSubTitle(e.target.subtitle)}
+          onChange={(e) => setSubTitle(e.target.value)}
           value={subtitle}
           placeholder="Enter blog subtitle"
           className="w-full max-w-lg mt-2 p-2 border border-gray-300 outline-none rounded"
@@ -98,14 +131,15 @@ const AddBlog = () => {
             type="checkbox"
             checked={isPublished}
             className="scale-125 cursor-pointer"
-            onChange={(e) => e.setIsPublished(e.target.checked)}
+            onChange={(e) => setIsPublished(e.target.checked)}
           />
         </div>
         <button
+          disabled={isAdding}
           type="submit"
           className="mt-8 w-40 h-10 bg-primary text-white rounded cursor-pointer text-sm"
         >
-          Add Blog
+          {isAdding ? "Adding..." : "Add Blog"}
         </button>
       </div>
     </form>

@@ -20,5 +20,5 @@ blogRouter.post("/toggle-publish", auth, togglePublish);
 
 // post a new comment and get comment list for ind blog
 blogRouter.post("/add-comment", addComment);
-blogRouter.post("/comments", getBlogComments);
+blogRouter.get("/:blogId/comments", getBlogComments);
 export default blogRouter;

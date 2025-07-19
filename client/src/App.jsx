@@ -10,14 +10,18 @@ import Blog from "./pages/Blog.jsx";
 import Login from "./components/admin/Login.jsx";
 import "quill/dist/quill.snow.css";
 import { Toaster } from "react-hot-toast";
+import { useAppContext } from "./context/appContext.jsx";
 const App = () => {
+  const { token } = useAppContext();
+
   return (
     <div>
       <Toaster />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/blog/:id" element={<Blog />} />
-        <Route path="/admin" element={true ? <Layout /> : <Login />}>
+        {/* if token then only dashboard appcontext file logic */}
+        <Route path="/admin" element={token ? <Layout /> : <Login />}>
           <Route index element={<Dashboard />} />
           <Route path="addBlog" element={<AddBlog />} />
           <Route path="listBlog" element={<ListBlog />} />

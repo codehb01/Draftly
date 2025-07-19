@@ -12,7 +12,7 @@ export const addBlog = async (req, res) => {
 
     // checking if all fields are provided
     if (!title || !description || !category || !imageFile) {
-      return res.json({ sucess: false, message: "Missing required fields" });
+      return res.json({ success: false, message: "Missing required fields" });
     }
 
     // IMAGEKIT Usage
@@ -83,7 +83,7 @@ export const getBlogById = async (req, res) => {
 
 export const deleteBlogById = async (req, res) => {
   try {
-    const { id } = req.parse;
+    const { id } = req.params;
     await Blog.findByIdAndDelete(id);
 
     // Delete all comment associated with this blog
@@ -94,10 +94,28 @@ export const deleteBlogById = async (req, res) => {
   }
 };
 
-export const updateBlogById = async (req, res) => {};
+export const updateBlogById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedData = req.body;
+
+    const blog = await Blog.findByIdAndUpdate(id, updatedData, {
+      new: true,
+    });
+
+    if (!blog) {
+      return res.json({ success: false, message: "Blog not found" });
+    }
+
+    res.json({ success: true, message: "Blog updated", blog });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
 export const togglePublish = async (req, res) => {
   try {
-    const { id } = req.parse;
+    const { id } = req.params;
     const blog = await Blog.findById(id);
     blog.isPublished = !blog.isPublished;
     await blog.save();
@@ -119,8 +137,8 @@ export const addComment = async (req, res) => {
 
 export const getBlogComments = async (req, res) => {
   try {
-    const { blogId } = req.body;
-    const comments = await Comment.findById({
+    const { blogId } = req.params;
+    const comments = await Comment.find({
       blog: blogId,
       isApproved: true,
     }).sort({ createdAt: -1 });
