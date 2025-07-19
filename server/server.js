@@ -14,7 +14,11 @@ await connectDB();
 // middlewares
 import cors from "cors";
 
-const allowedOrigins = ["https://draftly-wine.vercel.app"];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://draftly-aawaxzd9t-harshal-bhosales-projects.vercel.app", // current frontend deployment
+];
+
 
 app.use(
   cors({
